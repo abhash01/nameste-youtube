@@ -68,3 +68,25 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 ### `npm run build` fails to minify
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+
+Requirement clarification
+-> Features
+-> Tech Stack
+
+1. Redux 2. Tailwind 3. React- router-dom 4. Bundler 5. Jest
+
+what is the use of reportwebVital ?
+
+reportWebVitals is a function provided by Create React App (CRA) that helps developers measure and monitor the performance of their web applications. It collects Web Vitals, which are key metrics that reflect the real-world performance of a website, especially in terms of user experience.
+
+reportWebVitals is a tool that helps you measure how fast and smooth your website is for users. It collects important performance metrics, called Web Vitals, that tell you things like:
+
+How fast the page loads (Largest Contentful Paint or LCP).
+How quickly users can interact with the page (First Input Delay or FID).
+How stable the layout is while the page is loading (Cumulative Layout Shift or CLS).
+You can use these measurements to understand if users are having a good experience or if there are problems like slow loading, delays when clicking buttons, or parts of the page shifting around unexpectedly.
+
+Why Use It?
+Find Slow Areas: It helps you identify which parts of your website might be too slow.
+Improve User Experience: You can see what needs to be improved to make the site faster and easier to use.
+Track Changes: It lets you track performance over time, so you can see if updates make the site better or worse.
