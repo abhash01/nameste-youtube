@@ -1,12 +1,43 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { toggleMenu } from "../utils/appSlice";
-import { Link } from "react-router-dom";
+import { YOUTUBE_SEARCH_AUTO } from "../utils/constant";
 
 const Head = () => {
+  const [searchquery, setSearchquery] = useState("");
+  const [searchsuggestion, setSearchsuggestion] = useState([]);
+  const [showsuggection, setShowsuggestion] = useState(false);
   const dispatch = useDispatch();
   const toggleMenuHandler = () => {
     dispatch(toggleMenu());
+  };
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      autoSearchQuery();
+    }, 200);
+
+    return () => {
+      clearTimeout(timer);
+    };
+  }, [searchquery]);
+
+  /**
+   * key - i
+   * - render the component
+   * - useEffect();
+   * - start timer => make a API call after 200ms
+   *
+   * key -ip
+   * - destroy the component (useEffect return method)
+   * - useEffect()
+   * - start timer => make a API call after 200ms
+   */
+
+  const autoSearchQuery = async () => {
+    const data = await fetch(YOUTUBE_SEARCH_AUTO + searchquery);
+    const json = await data.json();
+    setSearchsuggestion(json[1]);
   };
   return (
     <div className="grid grid-flow-col p-5 m-2 shadow-lg">
@@ -23,18 +54,35 @@ const Head = () => {
           src="https://t3.ftcdn.net/jpg/05/07/46/84/360_F_507468479_HfrpT7CIoYTBZSGRQi7RcWgo98wo3vb7.jpg"
         />
       </div>
-      <div className="flex col-span-10 px-10">
-        <input
-          className="w-1/2 p-2 border border-gray-400 rounded-l-full"
-          type="text"
-        />
-        <button className=" border py-2 px-2 border-gray-400 rounded-r-full">
-          <img
-            className="h-8"
-            alt="logo"
-            src="https://static.vecteezy.com/system/resources/previews/009/652/218/non_2x/magnifying-glass-icon-isolated-on-white-background-search-illustration-vector.jpg"
+      <div className=" col-span-10 px-10">
+        <div className="flex">
+          <input
+            className="w-1/2 p-2 border border-gray-400 rounded-l-full"
+            type="text"
+            value={searchquery}
+            onChange={(e) => setSearchquery(e.target.value)}
+            onFocus={() => setShowsuggestion(true)}
+            onBlur={() => setShowsuggestion(false)}
           />
-        </button>
+          <button className="border py-2 px-2 border-gray-400 rounded-r-full">
+            <img
+              className="h-8"
+              alt="logo"
+              src="https://static.vecteezy.com/system/resources/previews/009/652/218/non_2x/magnifying-glass-icon-isolated-on-white-background-search-illustration-vector.jpg"
+            />
+          </button>
+        </div>
+        {showsuggection && (
+          <div className="w-1/3 border-gray-400 rounded absolute bg-white">
+            <ul>
+              {searchsuggestion.map((s) => (
+                <li key={s} className="shadow-lg hover:bg-gray-200 py-2 px-2">
+                  {s}
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
       </div>
       <div className="flex col-span-1 my-2">
         <img
